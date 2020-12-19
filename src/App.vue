@@ -32,13 +32,15 @@
 					<span class="mr-4"><input type="radio" value="mobile" v-model="produto"> Mobile</span>
 					<span><input type="radio" value="outro" v-model="produto"> Outro</span>
 				</Rotulo>
-				<Rotulo nome="Prioridade">
-					<select name="" id="">
-						<option></option>
+				<Rotulo nome="Prioridade" >
+					<select v-model="prioridade">
+						<option v-for="prioridade in prioridades" 
+						:key="prioridade.codigo" 
+						:value="prioridade.codigo">{{ prioridade.nome }}</option>
 					</select>
 				</Rotulo>
 				<Rotulo nome="Primeira Reclamação?">
-					<Escolha />
+					<Escolha v-model="escolha"/>
 				</Rotulo>
 				<hr>
 				<button>Enviar</button>
@@ -68,10 +70,10 @@
 					<span>{{produto}}</span>
 				</Rotulo>
 				<Rotulo nome="Prioridade">
-					<span>{{}}</span>
+					<span>{{prioridade}}</span>
 				</Rotulo>
 				<Rotulo nome="Primeira Reclamação?">
-					<span>{{}}</span>
+					<span>{{ escolha }}</span>
 				</Rotulo>
 			</div>
 		</div>
@@ -85,6 +87,12 @@ import Escolha from './components/Escolha.vue'
 export default {
 	name: 'app',
 	components: { Rotulo, Escolha },
+	props:{
+		value:{
+			type: Boolean,
+			required: true,
+		}
+	},
 	data(){
 		return{
 			usuario:{
@@ -96,6 +104,13 @@ export default {
 			mensagem:'',
 			caracteristicas:[],
 			produto:'web',
+			prioridades:[
+				{codigo: 1, nome: 'Baixa'},
+				{codigo: 2, nome: 'Moderada'},
+				{codigo: 3, nome: 'Alta'},
+			],
+			prioridade: 1,
+			escolha:true,
 		}
 	}
 }
